@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="row">
+        <header>
+            <h1>국뽕</h1>
+            <div class="hbar"></div>
+        </header>
+        
+        <div id="grid">
+            <nav>
+                <ol>
+                    <li>
+                        <a href="1.html">애국가</a>
+                    </li>
+                    <li>
+                        <a href="2.html">국기에대한 맹세</a>
+                    </li>
+                    <li>
+                        <a href="3.html">국민교육 헌장</a>
+                    </li>
+                    <li><a href="4.html">태극기</a></li>
+                </ol>
+                <div class="vbar"></div>
+                
+            </nav>
+            <section>
+                <h1>국민교육헌장</h1>
+                우리는 민족중흥의 역사적 사명을 띠고 이 땅에 태어났다. 조상의 빛난 얼을 오늘에 되살려, 안으로 자주독립의 자세를 확립하고, 밖으로 인류 공영에 이바지할 때다. 이에, 우리의 나아갈
+                바를 밝혀 교육의
+                지표로 삼는다.<br /><br />
+
+                성실한 마음과 튼튼한 몸으로, 학문과 기술을 배우고 익히며, 타고난 저마다의 소질을 계발하고, 우리의 처지를 약진의 발판으로 삼아, 창조의 힘과 개척의 정신을 기른다. 공익과 질서를
+                앞세우며 능률과
+                실질을 숭상하고, 경애와 신의에 뿌리박은 상부상조의 전통을 이어받아, 명랑하고 따뜻한 협동 정신을 북돋운다. 우리의 창의와 협력을 바탕으로 나라가 발전하며, 나라의 융성이 나의 발전의
+                근본임을 깨달아,
+                자유와 권리에 따르는 책임과 의무를 다하며, 스스로 국가 건설에 참여하고 봉사하는 국민 정신을 드높인다.<br /><br />
+
+                반공 민주 정신에 투철한 애국 애족이 우리의 삶의 길이며, 자유 세계의 이상을 실현하는 기반이다. 길이 후손에 물려줄 영광된 통일 조국의 앞날을 내다보며, 신념과 긍지를 지닌 근면한
+                국민으로서, 민족의
+                슬기를 모아 줄기찬 노력으로, 새 역사를 창조하자.
+            </section>
+        </div>
+    </div>
+    <script>
+        var VBAR = document.querySelectorAll("#grid nav div.vbar")[0];
+        var HBAR = document.querySelectorAll("#row header div.hbar")[0];
+        var GRID = document.getElementById("grid");
+        var ROW = document.getElementById("row");
+        var x = 0;
+        var y = 0;
+        var isMoving = false;
+        var totalX = document.documentElement.offsetWidth;
+        var totalY = document.documentElement.offsetHeight;
+        var MAX_X = totalX-200;  
+        var MIN_X = 200;
+        var MAX_Y = totalY-200;
+        var MIN_Y = 200;
+
+        
+        VBAR.addEventListener("mousedown", function(e){
+            
+            x = e.pageX;
+            
+            isMoving = true;
+            console.log(totalX);
+        });
+        
+        HBAR.addEventListener("mousedown", function(e){
+            y = e.pageY;
+            isMoving = true;
+            console.log(totalY);
+            console.log(y);
+        });
+
+        window.addEventListener("mousemove", function(e){
+            if(isMoving){
+                var firstX = window.getComputedStyle(GRID).gridTemplateColumns.split(" ")[0].replace("/[^0-9]/g","");
+                var secondX = window.getComputedStyle(GRID).gridTemplateColumns.split(" ")[1].replace("/[^0-9]/g","");
+                console.log("fx : "+ firstX+" sX : "+secondX);
+
+                if(x != 0){
+                    var cx = e.pageX;
+                
+                var tx = totalX - cx;
+                
+                // var dx = cx - x;
+                // var rx = parseInt(firstX,10)+dx;
+                // console.log( x + " " +cx+" "+rx);
+                
+                if(cx < MIN_X){
+                    cx = MIN_X;
+                }
+                // if(tx < MAX){
+                //     tx = MAX;
+                // }
+
+                if(cx > MAX_X){
+                    cx = MAX_X;
+                }
+               
+                
+                GRID.style.gridTemplateColumns = cx+"px " + "auto";
+
+                console.log(e.pageX);
+                
+                x = e.pageX;
+
+                }
+                else if(y != 0){
+                var cy = e.pageY;
+                var ty = totalY - cy;
+                console.log(cy+" "+ty);
+
+                if(cy < MIN_Y){
+                    cy = MIN_Y;
+                }
+
+                if(cy > MAX_Y){
+                    cy = MAX_Y;
+                }
+
+                ROW.style.gridTemplateRows = cy+"px auto";
+                y = e.pageY;
+            }
+            }
+            
+ 
+        });
+
+
+        window.addEventListener("mouseup", function(e){
+            isMoving = false;
+            x= 0;
+            y= 0;
+        });
+
+    </script>
+</body>
+
+</html>
